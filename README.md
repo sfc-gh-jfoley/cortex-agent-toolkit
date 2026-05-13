@@ -5,7 +5,7 @@ A Cortex Code CLI plugin for the full Snowflake Cortex Agent lifecycle.
 ## Install
 
 ```bash
-cortex plugin install https://gitlab.com/joey.foley/cortex-agent-toolkit.git
+cortex plugin install sfc-gh-jfoley/cortex-agent-toolkit
 ```
 
 ## Skills
@@ -18,7 +18,6 @@ cortex plugin install https://gitlab.com/joey.foley/cortex-agent-toolkit.git
 | `cortex-agent-toolkit:cortex-agent-optimization` | Iterative dev/test optimization loop | Improving an existing agent |
 | `cortex-agent-toolkit:cortex-agent-flags` | Experimental flags reference | Looking up flag names/behavior |
 | `cortex-agent-toolkit:query-cortex-agent` | Query via DATA_AGENT_RUN | Quick agent invocation from SQL |
-| `cortex-agent-toolkit:agent-architect` | Multi-agent project framework | Building complex multi-agent systems |
 
 ## Recommended Workflow
 
@@ -33,17 +32,8 @@ cortex-agent-ddl (create agent)
 
 ## Cross-Plugin Reference
 
-The `ontology-demo` plugin's cortex-accelerator skill routes its terminal step to `cortex-agent-toolkit:cortex-agent-optimization`. Both plugins work independently but compose well together.
-
-## Configuration
-
-### GitHub Org (for agent-architect)
-
-Set the `GH_ORG` environment variable for agent-architect's repo creation:
-
-```bash
-export GH_ORG=sfc-gh-yourname
-```
+- The `ontology-demo` plugin's cortex-accelerator skill routes its terminal step to `cortex-agent-toolkit:cortex-agent-optimization`. Both plugins work independently but compose well together.
+- For multi-agent project orchestration (building apps, demos, etc.), see the `cortex-architect-builder` plugin.
 
 ## Prerequisites
 
