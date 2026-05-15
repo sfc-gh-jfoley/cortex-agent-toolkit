@@ -145,6 +145,8 @@ SHOW WAREHOUSES;
 ```
 Present the list and let the user pick. Store as `AGENT_WAREHOUSE`.
 
+> ℹ️ This warehouse will be embedded as `execution_environment: {type: "warehouse", warehouse: "<AGENT_WAREHOUSE>"}` inside every semantic view tool's `tool_resources` entry in Phase 4. Without it, the agent's CREATE succeeds but queries fail at runtime with error 399504.
+
 Verify access:
 ```sql
 SHOW GRANTS TO ROLE CURRENT_ROLE() ON WAREHOUSE <AGENT_WAREHOUSE>;

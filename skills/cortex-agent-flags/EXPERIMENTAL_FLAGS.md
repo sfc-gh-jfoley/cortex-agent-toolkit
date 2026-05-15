@@ -427,10 +427,10 @@ viz_policies:
 
 **Sources consulted:**
 - Snowflake public docs (ALTER AGENT, CREATE AGENT, Cortex Agents overview)
-- Glean search: #feat-cortex-agents Slack channel
+- Snowflake documentation and release notes
 - Internal docs: "Unrestricted Charting for Cortex Agents" (Adrian Stepniak, 2026-04-09)
 - Internal docs: "Chart Customization -- Quick Reference" (two versions)
-- Existing agents on default connection (DISH_AGENT, DISH_AGENT_BASE, etc.)
+- Existing agents on default connection
 - Snowflake public docs: "Customize charts in Snowflake Intelligence" (fetched 2026-04-17)
 
 **Change log:**

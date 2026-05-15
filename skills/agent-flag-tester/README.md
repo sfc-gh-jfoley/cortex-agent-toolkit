@@ -32,7 +32,7 @@ Creates 3 agent variants (BASE, AGENTIC, FASTPATH_OFF), builds and validates an 
 ## Install
 
 ```bash
-cp -r agent-flag-tester ~/.snowflake/cortex/skills/
+cortex plugin install sfc-gh-jfoley/cortex-agent-toolkit
 ```
 
 Then open Cortex Code and say:
@@ -45,8 +45,7 @@ The skill will walk you through all 7 phases with confirmation gates at each ste
 
 ```
 agent-flag-tester/
-├── .my_skill                             # Personal skill marker
-├── SKILL.md                              # 7-phase workflow (482 lines)
+├── SKILL.md                              # 7-phase workflow
 ├── README.md                             # This file
 └── references/
     ├── eval-config-template.yaml         # YAML template with 3 metrics
@@ -71,7 +70,7 @@ Uses the current `EXECUTE_AI_EVALUATION` API (not the deprecated `SYSTEM$EXECUTE
 
 ## Typical Results
 
-From a Dish Network flag sweep (34 questions, 3 runs per split):
+From an example flag sweep (34 questions, 3 runs per split):
 
 | Variant | answer_correctness (TEST) | logical_consistency (TEST) |
 |---|---|---|

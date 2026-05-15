@@ -116,7 +116,7 @@ No semantic views found in <scope>.
 
 Options:
   1. Search a different schema → provide DB.SCHEMA
-  2. Build a semantic view first → invoke semantic-view-ddl skill
+  2. Build a semantic view first → invoke the semantic-view-ddl skill (if installed) or use the bundled semantic-view skill
   3. Skip semantic view tools and use cortex_search or generic tools only
 ```
 
@@ -300,7 +300,7 @@ Apply these naming rules:
 - Max 40 characters, no spaces (use CamelCase)
 
 Auto-suggest names from the SV names:
-- `DISH_SUBSCRIBER_360` → `SubscriberAnalytics`
+- `CUSTOMER_360` → `CustomerAnalytics`
 - `MARKETING_CAMPAIGNS_SV` → `MarketingCampaignQuery`
 - `IOT_FLEET_360` → `IoTFleetAnalytics`
 

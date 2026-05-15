@@ -16,7 +16,7 @@ Ask:
 
 ```
 Which agent would you like to edit?
-  Fully qualified name: [e.g., DISH_ONTOLOGY_DEMO.DISH_KG.DISH_AGENT]
+  Fully qualified name: [e.g., MYDB.PUBLIC.MY_AGENT]
   Connection: [or press Enter for default]
 ```
 
@@ -88,7 +88,7 @@ Is <EDIT_AGENT_FQN> a production agent?
 ```
 Create a safety clone before editing?
 
-  Clone name: [e.g., DISH_ONTOLOGY_DEMO.DISH_KG.DISH_AGENT_BACKUP]
+  Clone name: [e.g., MYDB.PUBLIC.MY_AGENT_BACKUP]
 
 This is a zero-cost DDL clone — just copies the spec. To rollback:
   DROP AGENT <EDIT_AGENT_FQN>;
@@ -131,8 +131,8 @@ Proposed changes:
 
   instructions.orchestration:
     BEFORE: "You are a subscriber analytics agent..."
-    AFTER:  "You are an EchoStar subscriber analytics agent covering DISH TV,
-             Sling TV, and Boost Mobile..."
+    AFTER:  "You are a customer analytics agent covering all product lines
+             and regional segments..."
 
   orchestration.budget.seconds:
     BEFORE: 120
@@ -241,7 +241,7 @@ Verification:
   ✓ instructions.orchestration updated
   ✓ budget.seconds: 180 ✓
   ✓ tools: 3 (SupportDocsSearch added) ✓
-  ✓ Profile: "EchoStar Subscriber 360" ✓
+  ✓ Profile: "Customer Analytics 360" ✓
   ✓ Owner: SYSADMIN ✓
 ```
 
