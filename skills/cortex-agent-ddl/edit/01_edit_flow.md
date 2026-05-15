@@ -154,9 +154,39 @@ Apply changes to `CURRENT_SPEC` → store as `PATCHED_SPEC`.
 
 ---
 
+## Step E.4.5: Multitenancy check (conditional)
+
+After gathering changes, check if multitenancy is relevant for this edit:
+
+```
+Does this agent need to serve multiple tenants from shared base tables?
+(e.g., adding tenant isolation to an existing agent, or the agent already has RAPs
+but you want to verify the invocation pattern)
+
+  A) Yes — walk me through tenant isolation (loads Phase 4b)
+  B) No  — proceed to self-check
+```
+
+### If A (Yes):
+
+Set `IS_MULTITENANT = true` and load [../phases/04b_tenant_isolation.md](../phases/04b_tenant_isolation.md).
+
+Populate the Phase 4b context variables from the current spec:
+- `AGENT_DB`, `AGENT_SCHEMA` from `EDIT_AGENT_FQN`
+- `AGENT_FQN` = `EDIT_AGENT_FQN`
+- `AGENT_WAREHOUSE` from the first tool_resources entry's `execution_environment.warehouse`
+
+Run Phase 4b Steps 4b.1 through 4b.5, then return here to continue with Step E.5.
+
+### If B (No):
+
+Set `IS_MULTITENANT = false`. Continue to Step E.5.
+
+---
+
 ## Step E.5: Run Phase 5 self-check on patched spec
 
-Set `AGENT_SPEC = PATCHED_SPEC` and run all 15 rules from `../phases/05_self_check.md`.
+Set `AGENT_SPEC = PATCHED_SPEC` and run all 17 rules from `../phases/05_self_check.md`.
 
 The self-check output will indicate:
 ```

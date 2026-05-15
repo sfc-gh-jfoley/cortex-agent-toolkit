@@ -95,6 +95,26 @@ Store as `AGENT_PURPOSE`. This feeds into:
 
 ---
 
+## Step 1.2.5: Multitenancy check
+
+Ask:
+
+```
+Will this agent serve multiple tenants from shared base tables?
+(e.g., different customers/orgs querying the same tables, scoped by a tenant ID column)
+
+  A) Yes — I need tenant isolation (row access policies + scoped invocation)
+  B) No  — single-tenant or no row-level isolation needed
+```
+
+### If A (Yes):
+Set `IS_MULTITENANT = true`. Phase 4b (Tenant Isolation) will activate after Phase 4.
+
+### If B (No):
+Set `IS_MULTITENANT = false`. Phase 4b will be skipped.
+
+---
+
 ## Step 1.3: Privilege pre-check
 
 Before any discovery work, verify the current role can create an agent at the target location.
@@ -169,6 +189,7 @@ Agent context collected:
   Connection: <AGENT_CONNECTION>
   Warehouse:  <AGENT_WAREHOUSE>
   Purpose:    <first sentence of AGENT_PURPOSE>
+  Multitenant: <IS_MULTITENANT> (Phase 4b will <activate/be skipped>)
 
 Privilege checks:
   ✓ CREATE AGENT on <AGENT_DB>.<AGENT_SCHEMA>
@@ -193,3 +214,4 @@ Wait for confirmation before loading Phase 2.
 | `AGENT_WAREHOUSE` | Default execution warehouse |
 | `AGENT_PURPOSE` | Free-form business description |
 | `AGENT_TYPE` | `"domain"` or `"router"` |
+| `IS_MULTITENANT` | `true` or `false` — gates Phase 4b activation |

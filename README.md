@@ -12,7 +12,7 @@ cortex plugin install sfc-gh-jfoley/cortex-agent-toolkit
 
 | Skill | Purpose | When to Use |
 |---|---|---|
-| `cortex-agent-ddl` | Create or edit Cortex Agents using SQL DDL with auto-generated tool descriptions and 16-rule spec validation | Building a new agent from a semantic view, or editing an existing agent's spec |
+| `cortex-agent-ddl` | Create or edit Cortex Agents using SQL DDL with auto-generated tool descriptions, 17-rule spec validation, tenant isolation (Phase 4b), and CI/CD deployment (Phase 8) | Building a new agent from a semantic view, editing an existing agent's spec, or deploying agents via CI/CD pipelines |
 | `agent-evaluation` | Run native Snowflake agent evaluations with ground-truth datasets | Measuring agent quality: answer correctness, tool selection accuracy, logical consistency |
 | `agent-flag-tester` | Compare 3 agent variants (BASE / AGENTIC / FASTPATH_OFF) side-by-side | Testing which experimental flag combination works best for your agent |
 | `cortex-agent-optimization` | Iterative improvement loop with dev/test eval splits and accept/reject gates | Systematically improving an existing agent's accuracy over multiple iterations |
@@ -42,12 +42,16 @@ Without it, `CREATE AGENT` succeeds silently but `DATA_AGENT_RUN` fails with err
 ```
 semantic-view-ddl (create semantic view — separate plugin)
   └── cortex-agent-ddl (create agent from SV)
+       ├── Phase 4b: Tenant Isolation (if multitenant)
+       │   └── RAP generation + invocation pattern docs
        └── writes handoff.json
             ├── agent-evaluation (baseline quality measurement)
             ├── agent-flag-tester (compare flag variants)
             │   └── writes flag_sweep_baseline.json
-            └── cortex-agent-optimization (iterative improvement)
-                 └── uses flag_sweep_baseline.json as starting point
+            ├── cortex-agent-optimization (iterative improvement)
+            │   └── uses flag_sweep_baseline.json as starting point
+            └── Phase 8: CI/CD Deploy (GitHub Actions / GitLab / Azure)
+                 └── OIDC service user + env promotion + rollback
 ```
 
 ## Bundled Skill Dependencies
