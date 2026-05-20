@@ -144,19 +144,14 @@ ALTER TABLE <TABLE_FQN> ADD ROW ACCESS POLICY
 **Pattern C (session attribute):**
 
 ```sql
--- Memoizable UDF for entitlement check (caches per-session for performance)
+-- Memoizable UDF for entitlement check (PRODUCTION)
 CREATE OR REPLACE FUNCTION <AGENT_DB>.<AGENT_SCHEMA>.GET_TENANT_ID()
   RETURNS VARCHAR
   LANGUAGE SQL
   MEMOIZABLE
 AS
 $$
-  SELECT COALESCE(
-    -- Immutable session attribute (set by trusted middleware / DATA_AGENT_RUN variables)
-    SYS_CONTEXT('SNOWFLAKE$SESSION_ATTRIBUTES', 'tenant_id'),
-    -- Fallback: mutable session variable (for interactive testing only)
-    GETVARIABLE('TENANT_ID')
-  )
+  SELECT SYS_CONTEXT('SNOWFLAKE$SESSION_ATTRIBUTES', 'tenant_id')
 $$;
 
 -- Row access policy using memoizable UDF
@@ -168,6 +163,26 @@ CREATE OR REPLACE ROW ACCESS POLICY <AGENT_DB>.<AGENT_SCHEMA>.RAP_TENANT_BY_SESS
 ALTER TABLE <TABLE_FQN> ADD ROW ACCESS POLICY
   <AGENT_DB>.<AGENT_SCHEMA>.RAP_TENANT_BY_SESSION ON (<TENANT_ID_COLUMN>);
 ```
+
+> **Worksheet testing only** — Use this variant to test RAP behavior in a Snowsight worksheet without needing the full `variables` block or `SET_SYS_CONTEXT` call. Do NOT deploy this to production.
+>
+> ```sql
+> -- TEST-ONLY UDF with mutable variable fallback
+> CREATE OR REPLACE FUNCTION <AGENT_DB>.<AGENT_SCHEMA>.GET_TENANT_ID_TEST()
+>   RETURNS VARCHAR
+>   LANGUAGE SQL
+> AS
+> $$
+>   SELECT COALESCE(
+>     SYS_CONTEXT('SNOWFLAKE$SESSION_ATTRIBUTES', 'tenant_id'),
+>     GETVARIABLE('TENANT_ID')
+>   )
+> $$;
+>
+> -- Test usage:
+> SET TENANT_ID = 'ACME_CORP';
+> SELECT * FROM <TABLE> WHERE 1=1;  -- RAP filters automatically
+> ```
 
 > ⚠️ **Do NOT execute this DDL automatically.** Present it to the user for review and delegate execution to the `data-governance` skill (`data-policy` sub-skill) if the user wants guided policy creation. This phase provides the patterns; `data-governance` owns policy lifecycle.
 

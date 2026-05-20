@@ -62,6 +62,8 @@ Present this structure to the user and ask them to commit it to their repository
 
 ```sql
 -- Run as ACCOUNTADMIN or SECURITYADMIN
+-- NOTE: Prefer SECURITYADMIN or a custom security automation role.
+-- ACCOUNTADMIN is shown for simplicity but is not required for these operations.
 USE ROLE SECURITYADMIN;
 
 -- Create a dedicated role for agent deployment

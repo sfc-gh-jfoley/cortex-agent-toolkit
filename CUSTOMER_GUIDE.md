@@ -44,7 +44,7 @@ That's it. The sections below cover each phase in detail.
 
 ## Phase A: Build Your Semantic View
 
-> **This phase uses the `semantic-view-ddl` plugin** (installed separately). See the [semantic-view-ddl Customer Guide](../../skills/semantic-view-ddl/CUSTOMER_GUIDE.md) for the full 8-phase walkthrough.
+> **This phase uses the `semantic-view-ddl` plugin** (installed separately). See the [semantic-view-ddl Customer Guide](../semantic-view-ddl/CUSTOMER_GUIDE.md) for the full 8-phase walkthrough.
 
 A Cortex Agent needs at least one **semantic view** to answer data questions. A semantic view tells Cortex Analyst what your tables contain, how they relate, and what business terms map to which columns.
 
@@ -62,7 +62,7 @@ The skill will:
 2. Classify columns as facts, dimensions, or metrics
 3. Detect foreign key relationships between tables
 4. Generate a `CREATE SEMANTIC VIEW` DDL statement
-5. Run 18 self-checks before showing you the DDL
+5. Run 23 self-checks before showing you the DDL
 6. Execute it and validate with test questions
 
 **Output:** A deployed semantic view (e.g., `MY_DB.PUBLIC.ORDERS_SV`) ready for agent use.
@@ -73,7 +73,7 @@ The skill will:
 
 > **Skill:** `cortex-agent-ddl`
 
-This phase creates a Cortex Agent that uses your semantic view(s) as tools. The agent gets auto-generated tool descriptions, validated instructions, and a 16-rule spec check before deployment.
+This phase creates a Cortex Agent that uses your semantic view(s) as tools. The agent gets auto-generated tool descriptions, validated instructions, and a 17-rule spec check before deployment.
 
 **What you'll need:**
 - A deployed semantic view (from Phase A or already existing)
@@ -95,7 +95,7 @@ Create a cortex agent using semantic view MY_DB.PUBLIC.ORDERS_SV
 
 4. **Spec Assembly** — Everything is assembled into a JSON spec with model selection, experimental flags, warehouse configuration, tools, and instructions.
 
-5. **Self-Check** — 16 validation rules run against the spec:
+5. **Self-Check** — 17 validation rules run against the spec:
    - Is `model.orchestration` set?
    - Does every tool name match a key in `tool_resources`?
    - Are tool descriptions long enough to prevent misselection?
@@ -126,7 +126,7 @@ The skill creates one agent with two Cortex Analyst tools — each with distinct
 Edit my agent MY_DB.PUBLIC.SALES_AGENT — update the instructions to be more concise
 ```
 
-The edit flow loads the current spec, shows a diff of proposed changes, offers a production clone option, re-runs the 16-rule self-check, and applies the changes via ALTER AGENT.
+The edit flow loads the current spec, shows a diff of proposed changes, offers a production clone option, re-runs the 17-rule self-check, and applies the changes via ALTER AGENT.
 
 ---
 
@@ -385,6 +385,8 @@ SELECT TRY_PARSE_JSON(
   )
 ) AS response;
 ```
+
+> **Note**: `CORTEX.AGENT_RUN` is for ad-hoc testing without a pre-created agent object — you provide the full spec inline. For production use, create a persistent agent with `CREATE AGENT` and invoke via `DATA_AGENT_RUN`. See Snowflake documentation for full `AGENT_RUN` reference.
 
 ---
 

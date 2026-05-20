@@ -10,6 +10,8 @@ This reference covers **how to call** a Cortex Agent at runtime. For spec creati
 
 ---
 
+> **Note on `stream` parameter**: The `stream` key is only meaningful for REST API invocations. In SQL-based invocations via `DATA_AGENT_RUN`, it is ignored — responses are always returned as a complete JSON object.
+
 ## Basic invocation
 
 Single-turn, no special options:
@@ -27,6 +29,8 @@ SELECT SNOWFLAKE.CORTEX.DATA_AGENT_RUN(
   }$$
 );
 ```
+
+> **Note on `stream` parameter**: The `stream` key is only meaningful for REST API invocations. In SQL-based invocations via `DATA_AGENT_RUN`, it is ignored — responses are always returned as a complete JSON object.
 
 ---
 
